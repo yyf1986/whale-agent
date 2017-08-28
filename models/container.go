@@ -87,6 +87,8 @@ func DelContainer(container_id string) error {
 	if err != nil {
 		return err
 	} else {
+		//删除容器时，释放端口
+		//DelPort()
 		return nil
 	}
 }

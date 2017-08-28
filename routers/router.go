@@ -14,11 +14,12 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.ContainerController{}, "Get:Index")
-	beego.Router("/v1/container/create", &controllers.ContainerController{}, "Get:Create")
-	beego.Router("/v1/container/start", &controllers.ContainerController{}, "Get:Start")
-	beego.Router("/v1/container/stop", &controllers.ContainerController{}, "Get:Stop")
-	beego.Router("/v1/container/del", &controllers.ContainerController{}, "Get:Del")
-	beego.Router("/v1/container/getall", &controllers.ContainerController{}, "Get:GetAll")
-	beego.Router("/v1/host/res", &controllers.ResController{})
+	//beego.Router("/", &controllers.ContainerController{}, "Get:Index")
+	//beego.Router("/v1/container/create", &controllers.ContainerController{}, "Get:Create")
+	//beego.Router("/v1/container/start", &controllers.ContainerController{}, "Get:Start")
+	//beego.Router("/v1/container/stop", &controllers.ContainerController{}, "Get:Stop")
+	//beego.Router("/v1/container/del", &controllers.ContainerController{}, "Get:Del")
+	//beego.Router("/v1/container/getall", &controllers.ContainerController{}, "Get:GetAll")
+	beego.Router("/v1/res/host", &controllers.ResController{})
+	beego.Router("/v1/res/getport", &controllers.ResController{}, "Get:GetPort")
 }

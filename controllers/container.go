@@ -13,6 +13,7 @@ func (d *ContainerController) Index() {
 	d.Data["json"] = map[string]interface{}{"status": 200}
 	d.ServeJSON()
 }
+
 func (d *ContainerController) Create() {
 	container_name := d.GetString("container_name")
 	image_name := d.GetString("image_name")

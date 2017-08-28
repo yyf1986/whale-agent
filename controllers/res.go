@@ -13,3 +13,9 @@ func (d *ResController) Get() {
 	d.Data["json"] = models.GetAgentinfo()
 	d.ServeJSON()
 }
+
+func (d *ResController) GetPort() {
+	d.Data["json"] = map[string]int{"port": models.GetPort()}
+	d.ServeJSON()
+}
+
