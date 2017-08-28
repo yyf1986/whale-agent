@@ -5,20 +5,24 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+	"strconv"
 )
 
-func GetRes() map[string]interface{} {
-	res := make(map[string]interface{})
+func GetRes() (int,int,int) {
+
 	MemTotal, _ := exec.Command("/bin/bash", "-c", `cat /proc/meminfo |grep MemTotal |awk '{print $2/1024}'`).Output()
-	res["MemTotal"] = strings.Replace(string(MemTotal), "\n", "", -1) + "M"
+	memtotal,_  := strconv.Atoi(strings.Split(strings.Replace(string(MemTotal), ".*\n", "", -1),".")[0])
+
 
 	MemAvailable, _ := exec.Command("/bin/bash", "-c", `cat /proc/meminfo |grep MemAvailable |awk '{print $2/1024}'`).Output()
-	res["MemAvailable"] = strings.Replace(string(MemAvailable), "\n", "", -1) + "M"
+	memavailable,_ := strconv.Atoi(strings.Split(strings.Replace(string(MemAvailable), ".*\n", "", -1),".")[0])
+
 
 	CpuTotal, _ := exec.Command("/bin/bash", "-c", `cat /proc/cpuinfo | grep pr |wc -l`).Output()
-	res["CpuTotal"] = strings.Replace(string(CpuTotal), "\n", "", -1)
+	cpuTotal,_ := strconv.Atoi(strings.Replace(string(CpuTotal), "\n", "", -1))
 
-	return res
+
+	return memtotal, memavailable, cpuTotal
 }
 
 func setCpu(do string, num float64) {

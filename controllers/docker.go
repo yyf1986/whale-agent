@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"whale-agent/models"
 	"github.com/astaxie/beego"
+	"whale-agent/models"
 )
 
 type DockerController struct {
@@ -32,7 +32,7 @@ func (d *DockerController) Create() {
 
 func (d *DockerController) Start() {
 	container_id := d.GetString("container_id")
-	if container_id != ""  {
+	if container_id != "" {
 		err := models.StartContainer(container_id)
 		if err != nil {
 			d.Data["json"] = map[string]interface{}{"status": 666, "errinfo": err.Error()}

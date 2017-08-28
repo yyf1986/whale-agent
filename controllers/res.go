@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"whale-agent/models"
 	"github.com/astaxie/beego"
+	"whale-agent/models"
 )
 
 type ResController struct {
@@ -10,6 +10,12 @@ type ResController struct {
 }
 
 func (d *ResController) Get() {
-	d.Data["json"] = models.GetRes()
+	d.Data["json"] = models.GetAgentinfo()
+	d.ServeJSON()
+}
+
+func (d *ResController) Get2() {
+	a, b, c := models.GetRes()
+	d.Data["json"] = a + b + c
 	d.ServeJSON()
 }

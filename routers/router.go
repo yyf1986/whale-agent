@@ -21,4 +21,5 @@ func init() {
 	beego.Router("/v1/container/del", &controllers.DockerController{}, "Get:Del")
 	beego.Router("/v1/container/getall", &controllers.DockerController{}, "Get:GetAll")
 	beego.Router("/v1/host/res", &controllers.ResController{})
+	beego.Router("/v1/host/res2", &controllers.ResController{},"Get:Get2")
 }

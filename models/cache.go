@@ -8,7 +8,7 @@ import (
 //文件缓存
 //var mem, _ = cache.NewCache("memory", `{"interval":10}`)
 var fc, _ = cache.NewCache("file",
-					`{"CachePath":"./logs/cache",
+	`{"CachePath":"./logs/cache",
 								"FileSuffix":".cache",
 								"DirectoryLevel":"1",
 								"EmbedExpiry":"120"}`)
