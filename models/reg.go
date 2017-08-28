@@ -1,10 +1,13 @@
 package models
 
 import (
-	"fmt"
+	"strconv"
+	"time"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
-	 "strconv"
+	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/toolbox"
 )
 
 type AgentInfo struct {
@@ -21,22 +24,30 @@ func GetAgentinfo() AgentInfo {
 	memtotal, memavailable, cpuTotal := GetRes()
 	var ai AgentInfo
 	port := beego.AppConfig.String("port")
-	p,_ := strconv.Atoi(port)
+	p, _ := strconv.Atoi(port)
 	ai = AgentInfo{beego.AppConfig.String("dockerhost"), p,
 		cpuTotal, memtotal,
 		cpuTotal, memavailable, "Y"}
-	fmt.Println(ai)
-	fmt.Println(beego.AppConfig.String("whaleserver"))
 	return ai
 }
-func reg() {
+func Reg() {
 	req := httplib.Post("http://" + beego.AppConfig.String("whaleserver") + "/v1/reg")
-	req.Body(GetAgentinfo())
-	str, err := req.String()
+	req.SetTimeout(1*time.Second, 2*time.Second)
+	req.JSONBody(GetAgentinfo())
+	_, err := req.String()
 	if err != nil {
-		fmt.Println(err.Error())
+		logs.Error(err.Error())
+	} else {
+		logs.Info(beego.AppConfig.String("dockerhost") + " reg sucess")
 	}
-	fmt.Println(str)
+}
 
-	//fmt.Println(GetAgentinfo())
+func addTask4Reg() {
+	f := func() error { Reg(); return nil }
+	tk := toolbox.NewTask("reg", "0 */1 * * * *", f)
+	toolbox.AddTask("reg", tk)
+}
+
+func init() {
+	addTask4Reg()
 }
