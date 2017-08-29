@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"whale-agent/models"
 	"strconv"
+	"whale-agent/models"
 )
 
 type ResController struct {
@@ -15,8 +15,8 @@ func (d *ResController) Get() {
 	d.ServeJSON()
 }
 
-func (d *ResController) GetPort() {
-	d.Data["json"] = map[string]int{"port": models.GetPort()}
+func (d *ResController) CreatePort() {
+	d.Data["json"] = map[string]int{"port": models.CreatePort()}
 	d.ServeJSON()
 }
 
@@ -28,3 +28,13 @@ func (d *ResController) DelPort() {
 	d.ServeJSON()
 }
 
+func (d *ResController) GetAllPorts() {
+	d.Data["json"] = models.GetAllPorts()
+	d.ServeJSON()
+}
+
+func (d *ResController) DelAllPorts() {
+	models.DelAllPorts()
+	d.Data["json"] = map[string]int{"status": 200}
+	d.ServeJSON()
+}

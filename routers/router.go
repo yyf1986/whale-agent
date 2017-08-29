@@ -21,6 +21,8 @@ func init() {
 	beego.Router("/v1/container/del", &controllers.ContainerController{}, "Get:Del")
 	beego.Router("/v1/container/getall", &controllers.ContainerController{}, "Get:GetAll")
 	beego.Router("/v1/res/host", &controllers.ResController{})
-	beego.Router("/v1/res/getport", &controllers.ResController{}, "Get:GetPort")
+	beego.Router("/v1/res/createport", &controllers.ResController{}, "Get:CreatePort")
 	beego.Router("/v1/res/delport", &controllers.ResController{}, "Get:DelPort")
+	beego.Router("/v1/res/getallports", &controllers.ResController{}, "Get:GetAllPorts")
+	beego.Router("/v1/res/delallports", &controllers.ResController{}, "Get:DelAllPorts")
 }

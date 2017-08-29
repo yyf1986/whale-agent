@@ -3,20 +3,21 @@ package models
 import (
 	"math/rand"
 	"os/exec"
+	"strconv"
 	"strings"
 	"time"
-	"strconv"
 )
+
 //内存换算的时候去掉了小数点，内存单位为M
-func GetRes() (int,int,int) {
+func GetRes() (int, int, int) {
 	MemTotal, _ := exec.Command("/bin/bash", "-c", `cat /proc/meminfo |grep MemTotal |awk '{print $2/1024}'`).Output()
-	memtotal,_  := strconv.Atoi(strings.Split(strings.Replace(string(MemTotal), ".*\n", "", -1),".")[0])
+	memtotal, _ := strconv.Atoi(strings.Split(strings.Replace(string(MemTotal), ".*\n", "", -1), ".")[0])
 
 	MemAvailable, _ := exec.Command("/bin/bash", "-c", `cat /proc/meminfo |grep MemAvailable |awk '{print $2/1024}'`).Output()
-	memavailable,_ := strconv.Atoi(strings.Split(strings.Replace(string(MemAvailable), ".*\n", "", -1),".")[0])
+	memavailable, _ := strconv.Atoi(strings.Split(strings.Replace(string(MemAvailable), ".*\n", "", -1), ".")[0])
 
 	CpuTotal, _ := exec.Command("/bin/bash", "-c", `cat /proc/cpuinfo | grep pr |wc -l`).Output()
-	cpuTotal,_ := strconv.Atoi(strings.Replace(string(CpuTotal), "\n", "", -1))
+	cpuTotal, _ := strconv.Atoi(strings.Replace(string(CpuTotal), "\n", "", -1))
 
 	return memtotal, memavailable, cpuTotal
 }
@@ -66,11 +67,12 @@ SUIJI:
 	}
 	return num
 }
+
 //生成一个45000-50000的端口，端口必须不是已经在使用的
-func GetPort() int {
+func CreatePort() int {
 pp:
 	newport := randNum()
-	if ! checkPort(newport) {
+	if !checkPort(newport) {
 		goto pp
 	}
 	setPort("add", newport)
@@ -78,10 +80,23 @@ pp:
 }
 
 func DelPort(port int) {
-	if ! checkPort(port) {
+	if !checkPort(port) {
 		setPort("sub", port)
 	}
 }
+
+func GetAllPorts() []int {
+	if IsExistInFie("ResPort") {
+		return GetCacheFromFile("ResPort").([]int)
+	} else {
+		return []int{}
+	}
+}
+
+func DelAllPorts() {
+	DelCacheFromFile("ResPort")
+}
+
 //不存在为true，存在为false
 func checkPort(port int) bool {
 	isnew := true
@@ -92,7 +107,7 @@ func checkPort(port int) bool {
 				isnew = false
 			}
 		}
-		if ! isnew {
+		if !isnew {
 			return false
 		} else {
 			return true
