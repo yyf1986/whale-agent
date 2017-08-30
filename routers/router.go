@@ -25,4 +25,5 @@ func init() {
 	beego.Router("/v1/res/delport", &controllers.ResController{}, "Get:DelPort")
 	beego.Router("/v1/res/getallports", &controllers.ResController{}, "Get:GetAllPorts")
 	beego.Router("/v1/res/delallports", &controllers.ResController{}, "Get:DelAllPorts")
+	beego.Router("/v1/image/getall", &controllers.ImageController{}, "Get:GetImages")
 }
