@@ -17,9 +17,14 @@ func GetImages() []string {
 		if err != nil {
 			fmt.Println(err.Error())
 			return []string{}
-		}else {
+		} else {
 			for _, image := range Images {
-				images = append(images,image.RepoTags[0])
+				//fmt.Println(image)
+				if len(image.RepoTags) >= 1 {
+					if image.RepoTags[0] != "<none>:<none>" {
+						images = append(images, image.RepoTags[0])
+					}
+				}
 			}
 			return images
 		}
