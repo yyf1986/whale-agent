@@ -18,6 +18,7 @@ type AgentInfo struct {
 	AverCpu      int
 	AverMem      int
 	DockerStatus string
+	Url          map[string]string
 }
 
 func GetAgentinfo() AgentInfo {
@@ -25,9 +26,19 @@ func GetAgentinfo() AgentInfo {
 	var ai AgentInfo
 	port := beego.AppConfig.String("port")
 	p, _ := strconv.Atoi(port)
+	url := map[string]string{"CreateContainer":"/v1/container/create",
+								"DelContainer":"/v1/container/del",
+								"StartContainer":"/v1/container/start",
+								"StopContainer":"/v1/container/stop",
+								"GetAllContainers":"/v1/container/getall",
+								"GetImages":"/v1/image/getall",
+								"CreatePort":"/v1/res/createport",
+								"DelPort":"/v1/res/delport",
+								"GetAllPorts":"/v1/res/getallports",
+								"DelAllPorts":"/v1/res/delallports"}
 	ai = AgentInfo{beego.AppConfig.String("dockerhost"), p,
-		cpuTotal, memtotal,
-		cpuTotal, memavailable, "Y"}
+					cpuTotal, memtotal,
+					cpuTotal, memavailable, "Y",url}
 	return ai
 }
 func Reg() {
