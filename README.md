@@ -1,1 +1,1 @@
-[说明](https://github.com/yyf1986/whale/blob/master/README.md)
+[说明](https://yyf1986.github.io/whale/v1.0)
