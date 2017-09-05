@@ -6,7 +6,7 @@ import (
 
 	"flag"
 	"strconv"
-	//"strings"
+	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/toolbox"
@@ -19,7 +19,7 @@ var FilterIp = func(ctx *context.Context) {
 	allowall := beego.AppConfig.String("allowall")
 	if allowall == "N" {
 		clientip := ctx.Input.IP()
-		allow_ip := beego.AppConfig.String("whaleserver")
+		allow_ip := strings.Split(beego.AppConfig.String("whaleserver"),":")[0]
 		if clientip == allow_ip {
 			isIn = true
 		}
